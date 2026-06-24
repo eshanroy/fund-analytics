@@ -72,3 +72,22 @@ SELECT scheme_name,
 FROM "07_scheme_performance"
 ORDER BY return_3yr_pct DESC
 LIMIT 10;
+
+-- Average NAV per Month
+
+SELECT
+    strftime('%Y-%m', date) AS month,
+    AVG(nav) AS avg_nav
+FROM "02_nav_history"
+GROUP BY month
+ORDER BY month;
+
+-- SIP YoY Growth
+
+SELECT
+    strftime('%Y', transaction_date) AS year,
+    SUM(amount_inr) AS total_sip_amount
+FROM "08_investor_transactions"
+WHERE transaction_type = 'Sip'
+GROUP BY year
+ORDER BY year;
